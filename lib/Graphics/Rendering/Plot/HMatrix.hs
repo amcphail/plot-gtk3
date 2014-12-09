@@ -46,6 +46,7 @@ import Graphics.Rendering.Plot.Gtk
 
 -----------------------------------------------------------------------------
 
+nohandle :: Monad m => m a -> m ()
 nohandle m = m >> return ()
 
 -----------------------------------------------------------------------------
@@ -63,6 +64,7 @@ mplotH (v:vs) = display $ S.plot (Line,v,vs)
 -----------------------------------------------------------------------------
 
 -- apply several functions to one object
+mapf :: [a -> b] -> a -> [b]
 mapf fs x = map ($ x) fs
 
 {- | Draws a list of functions over a desired range and with a desired number of points 
@@ -118,8 +120,10 @@ gnuplotX :: String -> IO ()
 gnuplotX command = do { _ <- system cmdstr; return()} where
     cmdstr = "echo \""++command++"\" | gnuplot -persist"
 
+datafollows :: String
 datafollows = "\\\"-\\\""
 
+prep :: [[Double]] -> String
 prep = (++"e\n\n") . unlines . map (unwords . (map show))
 
 {- | Draws a 3D surface representation of a real matrix.

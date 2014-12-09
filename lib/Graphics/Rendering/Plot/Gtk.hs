@@ -104,6 +104,7 @@ display f = do
                   fig' <- get canvas figure
                   writeFigureState ot fn s fig'
                 ResponseCancel -> return ()
+                _              -> error "Unexpected Response"
               widgetHide fc
 
      widgetShowAll window 
@@ -180,6 +181,7 @@ filterNameType "PNG" = PNG
 filterNameType "PS"  = PS
 filterNameType "PDF" = PDF
 filterNameType "SVG" = SVG
+filterNameType     _ = error "Unknown output type"
 
 -----------------------------------------------------------------------------
 
