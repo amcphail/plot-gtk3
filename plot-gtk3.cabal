@@ -36,7 +36,7 @@ library
 
   hs-source-dirs:    lib
 
-  Exposed-Modules:   Graphics.Rendering.Plot.Gtk3
+  Exposed-Modules:   Graphics.Rendering.Plot.Gtk
                      Graphics.Rendering.Plot.HMatrix
                      Graphics.UI.Gtk.Plot
 
