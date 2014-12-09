@@ -12,12 +12,12 @@
 --
 -----------------------------------------------------------------------------
 
-module Graphics.UI.Gtk3.Plot (
-                             FigureHandle()
-                             -- * Drawing Area
-                             , plotNew
-                             -- * Attributes
-                             , figure
+module Graphics.UI.Gtk.Plot (
+                            FigureHandle()
+                            -- * Drawing Area
+                            , plotNew
+                            -- * Attributes
+                            , figure
                             ) where
 
 -----------------------------------------------------------------------------
@@ -30,7 +30,7 @@ import Control.Monad.Trans
 
 import System.Glib.GObject
 
-import Graphics.UI.Gtk3
+import Graphics.UI.Gtk
 
 import Graphics.Rendering.Plot.Figure
 

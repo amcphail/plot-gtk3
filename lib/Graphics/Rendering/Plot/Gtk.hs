@@ -1,6 +1,6 @@
 -----------------------------------------------------------------------------
 -- |
--- Module      :  Graphics.Rendering.Plot.Gtk3
+-- Module      :  Graphics.Rendering.Plot.Gtk
 -- Copyright   :  (c) A. V. H. McPhail 2014
 -- License     :  BSD3
 --
@@ -12,14 +12,14 @@
 --
 -----------------------------------------------------------------------------
 
-module Graphics.Rendering.Plot.Gtk3 (
-                                    -- * Interface
-                                    PlotHandle()
-                                    , display, destroy
-                                    , withPlotHandle
-                                    , writePlotHandle
-                                    -- * Example
-                                    -- $example
+module Graphics.Rendering.Plot.Gtk (
+                                   -- * Interface
+                                   PlotHandle()
+                                   , display, destroy
+                                   , withPlotHandle
+                                   , writePlotHandle
+                                   -- * Example
+                                   -- $example
                                    ) where
 
 -----------------------------------------------------------------------------
@@ -29,9 +29,9 @@ import Control.Monad
 
 import Control.Concurrent
 
-import Graphics.UI.Gtk3
+import Graphics.UI.Gtk
 
-import Graphics.UI.Gtk3.Plot
+import Graphics.UI.Gtk.Plot
 
 import Graphics.Rendering.Plot
 
