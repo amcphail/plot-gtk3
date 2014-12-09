@@ -50,11 +50,12 @@ plotNew f = do
    
    set canvas [maybeFigure := (Just f)]
 
-   _ <- on canvas exposeEvent $ tryEvent $ liftIO $ do 
-           s <- widgetGetSize canvas
-           drw <- widgetGetDrawWindow canvas
+   _ <- on canvas draw $ liftIO $ do
+           (Just drw) <- widgetGetWindow canvas
            fig <- get canvas figure 
-           renderWithDrawable drw (renderFigureState fig s)
+           sx  <- widgetGetAllocatedWidth canvas
+           sy  <- widgetGetAllocatedHeight canvas
+           renderWithDrawWindow drw (renderFigureState fig (sx, sy))
 
    return canvas
 
@@ -66,9 +67,10 @@ figure = newAttr getFigure setFigure
    where getFigure o = do
                        Just f <- get o maybeFigure 
                        readMVar f 
-         setFigure o f = set o [maybeFigure :~> (\(Just h) -> do
-                                                              modifyMVar_ h (\_ -> return f)
-                                                              return $ Just h)]
+         setFigure o f = set o [maybeFigure :~>
+                                (\(Just h) -> do
+                                    modifyMVar_ h (\_ -> return f)
+                                    return $ Just h)]
                                                      
 -----------------------------------------------------------------------------
 
@@ -77,4 +79,3 @@ maybeFigure = unsafePerformIO $ objectCreateAttribute
 {-# NOINLINE maybeFigure #-}
 
 -----------------------------------------------------------------------------
-
