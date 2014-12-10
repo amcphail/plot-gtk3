@@ -98,10 +98,13 @@ display f = do
                   Just ff <- fileChooserGetFilter fc
                   ffn <- fileFilterGetName ff
                   let ot = filterNameType ffn
-                  s <- widgetGetSize canvas
+                  sx <- widgetGetAllocatedWidth canvas
+                  sy <- widgetGetAllocatedHeight canvas
+                  let s = (sx, sy)
                   fig' <- get canvas figure
                   writeFigureState ot fn s fig'
                 ResponseCancel -> return ()
+                _              -> error "Unexpected Response"
               widgetHide fc
 
      widgetShowAll window 
@@ -132,10 +135,11 @@ destroy (PH _ handle) = do
 -- | perform some actions on the supplied 'PlotHandle'
 withPlotHandle :: PlotHandle -> Figure () -> IO ()
 withPlotHandle (PH fm cm) fig = do
-                                modifyMVar_ fm $ \f -> return (updateFigureState f fig)
-                                postGUIAsync $ withMVar cm (\canvas -> do
-                                                        (w,h) <- widgetGetSize canvas
-                                                        widgetQueueDrawArea canvas 0 0 w h) 
+  modifyMVar_ fm $ \f -> return (updateFigureState f fig)
+  postGUIAsync $ withMVar cm (\canvas -> do
+                                 w <- widgetGetAllocatedWidth canvas
+                                 h <- widgetGetAllocatedHeight canvas
+                                 widgetQueueDrawArea canvas 0 0 w h)
 
 -- | write the 'Figure' to disk
 writePlotHandle :: PlotHandle -> OutputType -> FilePath -> (Int,Int) -> IO ()
@@ -148,8 +152,9 @@ writePlotHandle (PH fm _cm) ty fn s = do
 newPlotSaveDialog :: IO FileChooserDialog
 newPlotSaveDialog = do
                     fc <- fileChooserDialogNew (Just "Save figure") Nothing
-                                         FileChooserActionSave
-                                         [("Accept",ResponseAccept),("Cancel",ResponseCancel)]
+                          FileChooserActionSave
+                          [("Accept",ResponseAccept),
+                           ("Cancel",ResponseCancel)]
                     fileChooserSetDoOverwriteConfirmation fc True
                     ff_png <- fileFilterNew
                     fileFilterSetName ff_png "PNG"
@@ -176,6 +181,7 @@ filterNameType "PNG" = PNG
 filterNameType "PS"  = PS
 filterNameType "PDF" = PDF
 filterNameType "SVG" = SVG
+filterNameType     _ = error "Unknown output type"
 
 -----------------------------------------------------------------------------
 
