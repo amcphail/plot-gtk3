@@ -1,1 +1,1 @@
- * Nicolas Dudebout fixed the plot-gtk.cabal repository line
+ * Sumit Sahrawat ported from gtk to gtk3
