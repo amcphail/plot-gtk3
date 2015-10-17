@@ -1,5 +1,5 @@
 Name:                plot-gtk3
-Version:             0.1.0.1
+Version:             0.1.0.2
 License:             BSD3
 License-file:        LICENSE
 Copyright:           (c) A.V.H. McPhail 2014, 2015
@@ -29,7 +29,7 @@ library
                      process,
                      glib >= 0.11 && < 0.14,
                      gtk3 >= 0.13 && < 0.15,
-                     hmatrix >= 0.10,
+                     hmatrix >= 0.17,
                      plot < 0.3
 
   Extensions:        

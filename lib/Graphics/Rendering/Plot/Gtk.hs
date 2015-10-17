@@ -1,7 +1,7 @@
 -----------------------------------------------------------------------------
 -- |
 -- Module      :  Graphics.Rendering.Plot.Gtk
--- Copyright   :  (c) A. V. H. McPhail 2014
+-- Copyright   :  (c) A. V. H. McPhail 2014, 2015
 -- License     :  BSD3
 --
 -- Maintainer  :  haskell.vivian.mcphail <at> gmail <dot> com
